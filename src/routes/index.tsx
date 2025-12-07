@@ -1,4 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Printer } from "lucide-react";
+import { LoginForm } from "@/components/login-form";
 
 export const Route = createFileRoute("/")({
 	component: App,
@@ -6,28 +8,32 @@ export const Route = createFileRoute("/")({
 
 function App() {
 	return (
-		<div className="text-center">
-			<header className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">
-				<p>
-					Edit <code>src/routes/index.tsx</code> and save to reload.
-				</p>
-				<a
-					className="text-[#61dafb] hover:underline"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Learn React
-				</a>
-				<a
-					className="text-[#61dafb] hover:underline"
-					href="https://tanstack.com"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Learn TanStack
-				</a>
-			</header>
+		<div className="bg-[#121214] grid min-h-svh lg:grid-cols-2">
+			<div className="flex flex-col gap-4 p-6 md:p-10">
+				<div className="flex justify-center gap-2 md:justify-start">
+					<Link
+						to="/"
+						className="flex items-center gap-2 font-medium text-white"
+					>
+						<div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
+							<Printer className="size-4" />
+						</div>
+						Async Printer
+					</Link>
+				</div>
+				<div className="flex flex-1 items-center justify-center">
+					<div className="w-full max-w-xs">
+						<LoginForm />
+					</div>
+				</div>
+			</div>
+			<div className="bg-muted relative hidden lg:block">
+				<img
+					src="/auth-bg.jpg"
+					alt=""
+					className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+				/>
+			</div>
 		</div>
 	);
 }
