@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
+import { Router, redirect, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,8 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
+	const navigate = useNavigate({ from: "/" });
+
 	const form = useForm({
 		defaultValues: {
 			email: "",
@@ -25,6 +28,8 @@ export function LoginForm() {
 			toast(
 				"Authentication is incomplete. You will be redirected to the main page.",
 			);
+
+			navigate({ to: "/events" });
 		},
 	});
 
@@ -48,7 +53,7 @@ export function LoginForm() {
 					<Input type="email" placeholder="m@example.com" required />
 				</Field>
 				<Field className="gap-1">
-						<FieldLabel htmlFor="password">Password</FieldLabel>
+					<FieldLabel htmlFor="password">Password</FieldLabel>
 					<Input type="password" required />
 				</Field>
 				<Field>
