@@ -13,6 +13,7 @@ import {
 	CardAction,
 	CardContent,
 	CardDescription,
+	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
@@ -41,10 +42,10 @@ function RouteComponent() {
 	];
 
 	return (
-		<div className="min-h-screen flex items-center justify-center">
-			<Card className="w-[600px]">
+		<div className="min-h-screen flex flex-col items-center justify-center ">
+			<Card className="w-[600px] shadow-2xl">
 				<CardHeader className="">
-					<CardTitle>Select the main Events</CardTitle>
+					<CardTitle>Select The Main Event</CardTitle>
 					<CardDescription>
 						From the active events, choose one to see the overview.
 					</CardDescription>
@@ -66,8 +67,8 @@ function RouteComponent() {
 								asChild
 							>
 								<Link to="/$event/dashboard" params={{ event: event.slug }}>
-									<ItemMedia>
-										<img src={event.banner} alt="" className="w-16" />
+									<ItemMedia variant="image">
+										<img src={event.banner} alt="" className="size-32" />
 									</ItemMedia>
 									<ItemContent>
 										<ItemTitle>{event.name}</ItemTitle>
@@ -81,6 +82,13 @@ function RouteComponent() {
 						);
 					})}
 				</CardContent>
+
+				<CardFooter className="flex items-center justify-center opacity-40">
+					<CardDescription className="flex gap-4">
+						<Printer />
+						<span className="font-black">Async Print</span>
+					</CardDescription>
+				</CardFooter>
 			</Card>
 		</div>
 	);
