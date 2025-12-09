@@ -6,8 +6,8 @@ export const Route = createFileRoute('/$event/dashboard/')({
 
 function RouteComponent() {
   return (
-    <div className="min-h-screen">
-      
+    <div className='h-screen'>
+      <h1>funciona sapoora</h1>
     </div>
   )
 }

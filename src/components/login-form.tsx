@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { Router, redirect, useNavigate } from "@tanstack/react-router";
+import {  useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -35,13 +35,13 @@ export function LoginForm() {
 
 	return (
 		<form
-			className="text-white"
+			className=""
 			onSubmit={(e) => {
 				e.preventDefault();
 				form.handleSubmit();
 			}}
 		>
-			<FieldGroup>
+			<FieldGroup className="gap-4">
 				<div className="flex flex-col items-center gap-1 text-center">
 					<h1 className="text-2xl font-bold">Login to your account</h1>
 					<p className="text-muted-foreground text-sm text-balance">

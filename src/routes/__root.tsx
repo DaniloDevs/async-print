@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/sonner'
 
 export const Route = createRootRoute({
   component: () => (
-    <div className='bg-[#121214] text-white'>
+    <>
       <Outlet />
       <Toaster />
       <TanStackDevtools
@@ -20,6 +20,6 @@ export const Route = createRootRoute({
           },
         ]}
       />
-    </div>
+    </>
   ),
 })

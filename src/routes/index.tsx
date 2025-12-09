@@ -13,10 +13,10 @@ function App() {
 				<div className="flex justify-center gap-2 md:justify-start">
 					<Link
 						to="/"
-						className="flex items-center gap-2 font-medium text-white"
+						className="flex items-center gap-2 font-medium "
 					>
-						<div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-							<Printer className="size-4" />
+						<div className="bg-primary text-primary-foreground flex p-2 items-center justify-center rounded-md">
+							<Printer className="size-6" />
 						</div>
 						Async Printer
 					</Link>
