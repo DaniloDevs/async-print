@@ -3,6 +3,7 @@ import {
 	ArrowRight,
 	BadgeCheckIcon,
 	ChevronRightIcon,
+	CommandIcon,
 	Plus,
 	Printer,
 } from "lucide-react";
@@ -26,20 +27,27 @@ import {
 	ItemMedia,
 	ItemTitle,
 } from "@/components/ui/item";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { listEvents } from "@/https/list-events";
+import { queryClient } from "@/main";
+
+
+const eventsQueryOptions = queryOptions({
+	queryKey: ['events'],
+	queryFn: () => listEvents()
+})
+
 
 export const Route = createFileRoute("/events/")({
 	component: RouteComponent,
+	loader:() => queryClient.ensureQueryData(eventsQueryOptions),
 });
 
 function RouteComponent() {
-	const eventsData = [
-		{
-			name: "Fatos e fotos",
-			leads: 1.5478,
-			slug: "fatos-e-fotos",
-			banner: "/fatos-fotos.png",
-		},
-	];
+	const {
+      data: { events },
+    } = useSuspenseQuery(eventsQueryOptions)
+
 
 	return (
 		<div className="min-h-screen flex flex-col items-center justify-center ">
@@ -56,8 +64,8 @@ function RouteComponent() {
 						</Button>
 					</CardAction>
 				</CardHeader>
-				<CardContent>
-					{eventsData.map((event) => {
+				<CardContent className="flex flex-col gap-3">
+					{events.map((event) => {
 						return (
 							<Item
 								variant="outline"
@@ -67,12 +75,12 @@ function RouteComponent() {
 								asChild
 							>
 								<Link to="/$event/dashboard" params={{ event: event.slug }}>
-									<ItemMedia variant="image">
-										<img src={event.banner} alt="" className="size-32" />
+									<ItemMedia variant="icon">
+										<CommandIcon />
 									</ItemMedia>
 									<ItemContent>
-										<ItemTitle>{event.name}</ItemTitle>
-										<ItemDescription>Leads: {event.leads}</ItemDescription>
+										<ItemTitle>{event.title}</ItemTitle>
+										<ItemDescription>Leads: {event._count.leads}</ItemDescription>
 									</ItemContent>
 									<ItemActions>
 										<ChevronRightIcon className="size-4" />
