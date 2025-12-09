@@ -18,16 +18,15 @@ import {
 } from "@/components/ui/sidebar";
 
 export function EventSwitcher({
-	teams,
+	event,
 }: {
-	teams: {
+	event: {
 		name: string;
 		logo: React.ElementType;
-		plan: string;
 	}[];
 }) {
 	const { isMobile } = useSidebar();
-	const [activeTeam, setActiveTeam] = React.useState(teams[0]);
+	const [activeTeam, setActiveTeam] = React.useState(event[0]);
 
 	if (!activeTeam) {
 		return null;
@@ -47,7 +46,6 @@ export function EventSwitcher({
 							</div>
 							<div className="grid flex-1 text-left text-sm leading-tight">
 								<span className="truncate font-medium">{activeTeam.name}</span>
-								<span className="truncate text-xs">{activeTeam.plan}</span>
 							</div>
 							<ChevronsUpDown className="ml-auto" />
 						</SidebarMenuButton>
@@ -61,7 +59,7 @@ export function EventSwitcher({
 						<DropdownMenuLabel className="text-muted-foreground text-xs">
 							Teams
 						</DropdownMenuLabel>
-						{teams.map((team, index) => (
+						{event.map((team, index) => (
 							<DropdownMenuItem
 								key={team.name}
 								onClick={() => setActiveTeam(team)}

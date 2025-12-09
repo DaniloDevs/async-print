@@ -1,4 +1,9 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import {
+	createFileRoute,
+	Outlet,
+	useLocation,
+	useParams,
+} from "@tanstack/react-router";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import {
 	Breadcrumb,
@@ -20,6 +25,8 @@ export const Route = createFileRoute("/$event/dashboard")({
 });
 
 function RouteComponent() {
+	const { event } = useParams({ from: "/$event/dashboard" });
+
 	return (
 		<SidebarProvider>
 			<AppSidebar />
@@ -35,12 +42,14 @@ function RouteComponent() {
 							<BreadcrumbList>
 								<BreadcrumbItem className="hidden md:block">
 									<BreadcrumbLink href="#">
-										Building Your Application
+										{event
+											.replace(/-/g, " ")
+											.replace(/\b\w/g, (char) => char.toUpperCase())}
 									</BreadcrumbLink>
 								</BreadcrumbItem>
 								<BreadcrumbSeparator className="hidden md:block" />
 								<BreadcrumbItem>
-									<BreadcrumbPage>Data Fetching</BreadcrumbPage>
+									<BreadcrumbPage>Overviews</BreadcrumbPage>
 								</BreadcrumbItem>
 							</BreadcrumbList>
 						</Breadcrumb>

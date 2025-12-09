@@ -2,79 +2,82 @@ import {
 	AudioWaveform,
 	Bot,
 	Command,
+	FileChartPie,
 	GalleryVerticalEnd,
+	ListStart,
+	PrinterCheck,
 	SquareTerminal,
 } from "lucide-react";
 import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
-   SidebarHeader,
+	SidebarHeader,
 } from "@/components/ui/sidebar";
+import { EventSwitcher } from "./event-switch";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
-import { EventSwitcher } from "./event-switch";
 
 const data = {
 	user: {
 		name: "shadcn",
 		email: "m@example.com",
-		avatar: "/avatars/shadcn.jpg",
+		avatar: "/avatar-test.jpg",
 	},
-	teams: [
+	events: [
 		{
-			name: "Acme Inc",
+			name: "Fatos e Fotos",
 			logo: GalleryVerticalEnd,
-			plan: "Enterprise",
-		},
-		{
-			name: "Acme Corp.",
-			logo: AudioWaveform,
-			plan: "Startup",
-		},
-		{
-			name: "Evil Corp.",
-			logo: Command,
-			plan: "Free",
 		},
 	],
 	navMain: [
 		{
-			title: "Playground",
-			url: "#",
-			icon: SquareTerminal,
+			title: "Overview",
+			icon: FileChartPie,
 			isActive: true,
+			url: "#",
 			items: [
 				{
-					title: "History",
-					url: "#",
+					title: "Dashboard",
+					url: "/dashboard",
 				},
 				{
-					title: "Starred",
-					url: "#",
+					title: "Leads",
+					url: "/leads",
 				},
 				{
-					title: "Settings",
-					url: "#",
+					title: "Metrics",
+					url: "/metrics",
 				},
 			],
 		},
 		{
-			title: "Models",
-			url: "#",
-			icon: Bot,
+			title: "Print Device",
+			icon: PrinterCheck,
 			items: [
 				{
-					title: "Genesis",
-					url: "#",
+					title: "Overview",
+					url: "/printer/devices",
 				},
 				{
-					title: "Explorer",
-					url: "#",
+					title: "Settings",
+					url: "/printer/settings",
+					isActive: true,
+				},
+			],
+		},
+		{
+			title: "Print Queue",
+			icon: ListStart,
+			items: [
+				{
+					title: "Prints",
+					url: "/Prints",
 				},
 				{
-					title: "Quantum",
-					url: "#",
+					title: "Audit",
+					url: "Audits",
+					isActive: true,
 				},
 			],
 		},
@@ -83,9 +86,9 @@ const data = {
 
 export function AppSidebar() {
 	return (
-		<Sidebar collapsible="icon" variant="floating" >
-			<SidebarHeader className="">
-				<EventSwitcher teams={data.teams} />
+		<Sidebar collapsible="icon" variant="floating">
+			<SidebarHeader >
+				<EventSwitcher event={data.events} />
 			</SidebarHeader>
 			<SidebarContent>
 				<NavMain items={data.navMain} />
