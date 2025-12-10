@@ -1,6 +1,7 @@
-import { ChevronsUpDown, Plus } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Link, useParams } from "@tanstack/react-router";
+import { ChevronsUpDown, GalleryHorizontalIcon, Plus } from "lucide-react";
 import * as React from "react";
-
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -16,20 +17,37 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
+import { Skeleton } from "../ui/skeleton";
 
 export function EventSwitcher({
-	event,
+	events,
 }: {
-	event: {
-		name: string;
-		logo: React.ElementType;
+	events: {
+		id: string;
+		title: string;
+		bannerURL: null;
+		slug: string;
+		_count: {
+			leads: number;
+		};
 	}[];
 }) {
 	const { isMobile } = useSidebar();
-	const [activeTeam, setActiveTeam] = React.useState(event[0]);
+	const { event: eventSlug } = useParams({ from: "/$event/dashboard" });
 
-	if (!activeTeam) {
-		return null;
+	const activeEvent = React.useMemo(
+		() => events.find((event) => event.slug === eventSlug),
+		[events, eventSlug],
+	);
+
+	if (!activeEvent) {
+		return (
+			<SidebarMenu>
+				<SidebarMenuItem>
+					<Skeleton className="h-16 w-full" />
+				</SidebarMenuItem>
+			</SidebarMenu>
+		);
 	}
 
 	return (
@@ -41,15 +59,30 @@ export function EventSwitcher({
 							size="lg"
 							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 						>
-							<div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-								<activeTeam.logo className="size-4" />
+							<div className="flex aspect-square size-8 items-center justify-center rounded-lg overflow-hidden">
+								{activeEvent.bannerURL ? (
+									<img
+										src={activeEvent.bannerURL}
+										alt={activeEvent.title}
+										className="w-full h-full object-cover"
+									/>
+								) : (
+									<div className="size-full bg-muted" />
+								)}
 							</div>
-							<div className="grid flex-1 text-left text-sm leading-tight">
-								<span className="truncate font-medium">{activeTeam.name}</span>
+
+							{/* Este conteúdo só aparece quando a sidebar está expandida */}
+							<div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+								<span className="truncate font-medium">
+									{activeEvent.title}
+								</span>
 							</div>
-							<ChevronsUpDown className="ml-auto" />
+
+							{/* Ícone só aparece quando expandida */}
+							<ChevronsUpDown className="ml-auto group-data-[collapsible=icon]:hidden" />
 						</SidebarMenuButton>
 					</DropdownMenuTrigger>
+
 					<DropdownMenuContent
 						className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
 						align="start"
@@ -57,27 +90,53 @@ export function EventSwitcher({
 						sideOffset={4}
 					>
 						<DropdownMenuLabel className="text-muted-foreground text-xs">
-							Teams
+							Events
 						</DropdownMenuLabel>
-						{event.map((team, index) => (
-							<DropdownMenuItem
-								key={team.name}
-								onClick={() => setActiveTeam(team)}
-								className="gap-2 p-2"
-							>
-								<div className="flex size-6 items-center justify-center rounded-md border">
-									<team.logo className="size-3.5 shrink-0" />
-								</div>
-								{team.name}
-								<DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
-							</DropdownMenuItem>
-						))}
+
+						{events.map((event, index) => {
+							const isActive = event.slug === activeEvent.slug;
+
+							return (
+								<DropdownMenuItem
+									key={event.id}
+									className="gap-2 p-2"
+									disabled={isActive}
+									asChild
+								>
+									<Link
+										to="/$event/dashboard"
+										params={{ event: event.slug }}
+										className="flex w-full items-center gap-2"
+									>
+										<div className="flex size-6 items-center justify-center rounded-md border overflow-hidden">
+											{event.bannerURL ? (
+												<img
+													src={event.bannerURL}
+													alt={event.title}
+													className="w-full h-full object-cover"
+												/>
+											) : (
+												<div className="size-full bg-muted" />
+											)}
+										</div>
+
+										<span className="truncate">{event.title}</span>
+
+										<DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+									</Link>
+								</DropdownMenuItem>
+							);
+						})}
+
 						<DropdownMenuSeparator />
+
 						<DropdownMenuItem className="gap-2 p-2">
 							<div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
 								<Plus className="size-4" />
 							</div>
-							<div className="text-muted-foreground font-medium">Add team</div>
+							<span className="text-muted-foreground font-medium">
+								Create new Event
+							</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

@@ -75,8 +75,8 @@ function RouteComponent() {
 								asChild
 							>
 								<Link to="/$event/dashboard" params={{ event: event.slug }}>
-									<ItemMedia variant="icon">
-										<CommandIcon />
+									<ItemMedia variant="image">
+										<img  src={`${event.bannerURL}`} alt=""/>
 									</ItemMedia>
 									<ItemContent>
 										<ItemTitle>{event.title}</ItemTitle>
