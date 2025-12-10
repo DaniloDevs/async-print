@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "@tanstack/react-router";
 import { ChevronsUpDown, Plus } from "lucide-react";
-import * as React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,28 +16,32 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { listEvents } from "@/https/list-events";
 import { Skeleton } from "../ui/skeleton";
 
-export function EventSwitcher({
-  events,
-}: {
-  events: {
-    id: string;
-    title: string;
-    bannerURL: null;
-    slug: string;
-    _count: {
-      leads: number;
-    };
-  }[];
-}) {
+export function EventSwitcher() {
   const { isMobile } = useSidebar();
   const { event: eventSlug } = useParams({ from: "/$event/dashboard" });
 
-  const activeEvent = React.useMemo(
-    () => events.find((event) => event.slug === eventSlug),
-    [events, eventSlug],
-  );
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["events"],
+    queryFn: listEvents,
+  });
+
+  if (isLoading || isError) {
+    return (
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <Skeleton className="h-16 w-full" />
+        </SidebarMenuItem>
+      </SidebarMenu>
+    );
+  }
+
+  const events = data?.events ?? [];
+
+
+  const activeEvent = events.find((event) => event.slug === eventSlug);
 
   if (!activeEvent) {
     return (

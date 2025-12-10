@@ -1,10 +1,7 @@
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  ArrowRight,
-  BadgeCheckIcon,
   ChevronRightIcon,
-  CommandIcon,
   Plus,
   Printer,
 } from "lucide-react";

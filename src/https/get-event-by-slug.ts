@@ -1,10 +1,12 @@
 import { api } from "./apli-client";
 
 interface listEventssResponse {
-  events: {
+  event: {
     id: string;
     title: string;
-    bannerURL: null;
+    bannerURL: string
+    startIn: string,
+    endIn: string,
     slug: string;
     _count: {
       leads: number;

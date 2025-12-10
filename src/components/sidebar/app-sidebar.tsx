@@ -1,29 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "@tanstack/react-router";
 import {
-  AudioWaveform,
-  Bot,
-  Command,
   FileChartPie,
-  GalleryVerticalEnd,
   ListStart,
   PrinterCheck,
 } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/components/ui/sidebar";
-import { listEvents } from "@/https/list-events";
-import { Skeleton } from "../ui/skeleton";
 import { EventSwitcher } from "./event-switch";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 
-const data = {
-  events: [
-    {
-      name: "Fatos e Fotos",
-      logo: GalleryVerticalEnd,
-    },
-  ],
-};
 
 const user = {
   name: "shadcn",
@@ -85,20 +69,10 @@ const navMain = [
 ];
 
 export function AppSidebar() {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["events"],
-    queryFn: listEvents,
-  });
-
-  if (isLoading) return <Skeleton />;
-  if (isError || !data?.events?.length) return <Skeleton />;
-
-  const { events } = data;
-
   return (
     <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader>
-        <EventSwitcher events={events} />
+        <EventSwitcher/>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMain} />
