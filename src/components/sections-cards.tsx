@@ -17,7 +17,7 @@ export default function SectionsCards() {
   const { event: eventSlug } = useParams({ from: "/$event/dashboard" });
 
   const { data, isLoading } = useQuery({
-    queryKey: ["metrics", eventSlug],
+    queryKey: ["cards-metrics", eventSlug],
     queryFn: () => getEventOverviewMetrics(eventSlug),
     enabled: !!eventSlug,
   });
