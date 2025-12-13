@@ -28,11 +28,11 @@ const navMain = [
       },
       {
         title: "Leads",
-        url: "/leads",
+        url: "/dashboard/leads",
       },
       {
         title: "Metrics",
-        url: "/metrics",
+        url: "/dashboard/metrics",
       },
     ],
   },
