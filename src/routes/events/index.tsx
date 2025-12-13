@@ -1,10 +1,6 @@
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ChevronRightIcon,
-  Plus,
-  Printer,
-} from "lucide-react";
+import { ChevronRightIcon, Plus, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -48,10 +44,12 @@ function RouteComponent() {
           <CardTitle>Select The Main Event</CardTitle>
           <CardDescription>From the active events, choose one to see the overview.</CardDescription>
           <CardAction>
-            <Button>
-              <Plus className="size-4" />
-              Add Event
-            </Button>
+            <Link to="/events/create">
+              <Button>
+                <Plus className="size-4" />
+                Add Event
+              </Button>
+            </Link>
           </CardAction>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
