@@ -6,7 +6,7 @@ export async function uploadEventBanner(eventId: string, image: File) {
   const formData = new FormData();
   formData.append("banner", image);
 
-  const res = await api.patch(`events/${eventId}/banner`, {
+  const res = await api.post(`events/${eventId}/banner`, {
     body: formData,
   });
 

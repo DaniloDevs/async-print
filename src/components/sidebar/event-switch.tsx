@@ -40,7 +40,6 @@ export function EventSwitcher() {
 
   const events = data?.events ?? [];
 
-
   const activeEvent = events.find((event) => event.slug === eventSlug);
 
   if (!activeEvent) {
@@ -124,11 +123,13 @@ export function EventSwitcher() {
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem className="gap-2 p-2">
-              <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-                <Plus className="size-4" />
-              </div>
-              <span className="text-muted-foreground font-medium">Create new Event</span>
+            <DropdownMenuItem asChild className="gap-2 p-2">
+              <Link  to="/events/create">
+                <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
+                  <Plus className="size-4" />
+                </div>
+                <span className="text-muted-foreground font-medium">Create new Event</span>
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

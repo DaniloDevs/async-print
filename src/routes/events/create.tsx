@@ -52,7 +52,7 @@ export default function RouteComponent() {
       // 2. Upload do banner, se houver
       if (data.image) {
         await uploadEventBanner(created.id, data.image);
-      }
+      } 
 
       return created;
     },
